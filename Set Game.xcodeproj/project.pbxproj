@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8040D9A224AE237A00543D75 /* ColorValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8040D9A124AE237A00543D75 /* ColorValue.swift */; };
 		8052BDC624A61119000809C7 /* ShapeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8052BDC524A61119000809C7 /* ShapeName.swift */; };
 		8052BDC824A61B8D000809C7 /* SetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8052BDC724A61B8D000809C7 /* SetCardView.swift */; };
 		805C191D24A484550035123B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805C191C24A484550035123B /* AppDelegate.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8040D9A124AE237A00543D75 /* ColorValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorValue.swift; sourceTree = "<group>"; };
 		8052BDC524A61119000809C7 /* ShapeName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeName.swift; sourceTree = "<group>"; };
 		8052BDC724A61B8D000809C7 /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
 		805C191924A484550035123B /* Set Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Set Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +148,7 @@
 			children = (
 				80FDCDE124A50CF100BBC0F0 /* Shadings.swift */,
 				8052BDC524A61119000809C7 /* ShapeName.swift */,
+				8040D9A124AE237A00543D75 /* ColorValue.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				8052BDC824A61B8D000809C7 /* SetCardView.swift in Sources */,
 				805C193224A48E5C0035123B /* MaskingRect.swift in Sources */,
 				805C191D24A484550035123B /* AppDelegate.swift in Sources */,
+				8040D9A224AE237A00543D75 /* ColorValue.swift in Sources */,
 				80AEDFCE24AC938000468749 /* Grid.swift in Sources */,
 				80AEDFD224AC946000468749 /* Array+Identifiable.swift in Sources */,
 				80FDCDE224A50CF100BBC0F0 /* Shadings.swift in Sources */,

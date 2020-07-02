@@ -17,16 +17,19 @@ struct SetGameView: View {
     var body: some View {
     
            
-            Grid(self.setGameViewModel.getFirstTwelveSetCards) { setCard in
+        Grid(self.setGameViewModel.playingTwelveSetCards) { setCard in
                
                 SetCardView(setCard: setCard)
                     .onTapGesture {
                         
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                                self.setGameViewModel.choose(setCard: setCard)
+                        }
                 }
                 
                        
-                   }
-            }
+        }
+    }
         
        
         
