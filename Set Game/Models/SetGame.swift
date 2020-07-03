@@ -28,39 +28,58 @@ struct SetGame {
              }
              addedTwelveCards = true
              print("new deck count: \(deck.count)")
-             print("playing Deck \(playingTwelveDeck)")
+             
         
        
              
     }
     
-    func clearAllSelectedCards(array: inout Array<SetCard>) {
-        for index in 0..<array.count {
-            array[index].isSelected = false
+    mutating func addThreeCardsToPlayingDeck() {
+        for _ in 1...3 {
+            self.playingTwelveDeck.append(self.deck.remove(at: 0))
         }
     }
+    
+    mutating func clearAllSelected() {
+        for index in playingTwelveDeck.indices {
+            playingTwelveDeck[index].isSelected = false
+        }
+    }
+ 
     
   
     mutating func choose(setCard: SetCard) {
         if let index = playingTwelveDeck.firstIndex(of: setCard){
-            playingTwelveDeck[index].isSelected = true
-            isFaceUpCardCount += 1
-        }
-        if isFaceUpCardCount == 2 {
-            var selectedCardsArray = playingTwelveDeck.filter { $0.isSelected == true }
-            selectedCardsArray.append(setCard)
+            if !playingTwelveDeck[index].isSelected {
+                playingTwelveDeck[index].isSelected = true
+                isFaceUpCardCount += 1
+            }
             
-            if (selectedCardsArray[0].count, selectedCardsArray[1].count) == (selectedCardsArray[1].count, selectedCardsArray[2].count) || (selectedCardsArray[0].count, selectedCardsArray[1].count) != (selectedCardsArray[1].count, selectedCardsArray[2].count){
-
+        }
+        if isFaceUpCardCount == 3 {
+            var selectedCardsArray : Array<SetCard> = []
+            for index in playingTwelveDeck.indices {
+                if playingTwelveDeck[index].isSelected == true {
+                    selectedCardsArray.append(playingTwelveDeck[index])
+                    print("selectedArray: \(selectedCardsArray.count)")
+                }
+            }
+            
+            
+            if ((selectedCardsArray[0].count == selectedCardsArray[1].count) && (selectedCardsArray[1].count == selectedCardsArray[2].count)) || ((selectedCardsArray[0].count != selectedCardsArray[1].count) && (selectedCardsArray[1].count != selectedCardsArray[2].count) && (selectedCardsArray[0].count != selectedCardsArray[2].count)){
+                print("passed count")
                 
-                if (selectedCardsArray[0].shapeName, selectedCardsArray[1].shapeName) == (selectedCardsArray[1].shapeName, selectedCardsArray[2].shapeName) || (selectedCardsArray[0].shapeName, selectedCardsArray[1].shapeName) != (selectedCardsArray[1].shapeName, selectedCardsArray[2].shapeName) {
+                if ((selectedCardsArray[0].shapeName == selectedCardsArray[1].shapeName) && (selectedCardsArray[1].shapeName == selectedCardsArray[2].shapeName)) || ((selectedCardsArray[0].shapeName != selectedCardsArray[1].shapeName) && (selectedCardsArray[1].shapeName != selectedCardsArray[2].shapeName) && (selectedCardsArray[0].shapeName != selectedCardsArray[2].shapeName)) {
                     
-                        if (selectedCardsArray[0].color, selectedCardsArray[1].color) == (selectedCardsArray[1].color, selectedCardsArray[2].color) || (selectedCardsArray[0].color, selectedCardsArray[1].color) != (selectedCardsArray[1].color, selectedCardsArray[2].color) {
+                    print("passed shapName")
+                    
+                        if ((selectedCardsArray[0].color == selectedCardsArray[1].color) && (selectedCardsArray[1].color == selectedCardsArray[2].color)) || ((selectedCardsArray[0].color != selectedCardsArray[1].color) && (selectedCardsArray[1].color != selectedCardsArray[2].color) && (selectedCardsArray[0].color != selectedCardsArray[2].color)) {
                             
+                            print("passed color")
                             
-                            
-                            if (selectedCardsArray[0].shading, selectedCardsArray[1].shading) == (selectedCardsArray[1].shading, selectedCardsArray[2].shading) || (selectedCardsArray[0].shading, selectedCardsArray[1].shading) != (selectedCardsArray[1].shading, selectedCardsArray[2].shading) {
-                                                                            
+                            if ((selectedCardsArray[0].shading == selectedCardsArray[1].shading) && (selectedCardsArray[1].shading == selectedCardsArray[2].shading)) || ((selectedCardsArray[0].shading != selectedCardsArray[1].shading) && (selectedCardsArray[1].shading != selectedCardsArray[2].shading) && (selectedCardsArray[0].shading != selectedCardsArray[2].shading)) {
+                                                                    
+                                print("passed shading")
                                 for index in 0..<3 {
                                     
                                     selectedCardsArray[index].isMatched = true
@@ -70,7 +89,9 @@ struct SetGame {
                                                               for playingTwelveDeckIndex in self.playingTwelveDeck.indices {
                                                                   for selectedCardIndex in selectedCardsArray.indices {
                                                                       if selectedCardsArray[selectedCardIndex].id == playingTwelveDeck[playingTwelveDeckIndex].id {
+                                                                          print("card Value : \(playingTwelveDeck[playingTwelveDeckIndex])")
                                                                           playingTwelveDeck[playingTwelveDeckIndex].isMatched = true
+                                                                          addThreeCardsToPlayingDeck()
                                                                       }
                                                                   }
                                                               }
@@ -78,14 +99,7 @@ struct SetGame {
                                 
                                 
                                 }else {
-                                clearAllSelectedCards(array: &selectedCardsArray)
-                                for playingTwelveDeckIndex in self.playingTwelveDeck.indices {
-                                    for selectedCardIndex in selectedCardsArray.indices {
-                                        if selectedCardsArray[selectedCardIndex].id == playingTwelveDeck[playingTwelveDeckIndex].id {
-                                            playingTwelveDeck[playingTwelveDeckIndex].isMatched = false
-                                        }
-                                    }
-                                }
+                                clearAllSelected()
                                 isFaceUpCardCount = 0
                                         return
                                 
@@ -94,14 +108,7 @@ struct SetGame {
                             
                             
                         }else {
-                            clearAllSelectedCards(array: &selectedCardsArray)
-                                                          for playingTwelveDeckIndex in self.playingTwelveDeck.indices {
-                                                              for selectedCardIndex in selectedCardsArray.indices {
-                                                                  if selectedCardsArray[selectedCardIndex].id == playingTwelveDeck[playingTwelveDeckIndex].id {
-                                                                      playingTwelveDeck[playingTwelveDeckIndex].isMatched = false
-                                                                  }
-                                                              }
-                                                          }
+                            clearAllSelected()
                             isFaceUpCardCount = 0
                             return
                             
@@ -109,28 +116,14 @@ struct SetGame {
                     
                     
                 }else {
-                    clearAllSelectedCards(array: &selectedCardsArray)
-                                                  for playingTwelveDeckIndex in self.playingTwelveDeck.indices {
-                                                      for selectedCardIndex in selectedCardsArray.indices {
-                                                          if selectedCardsArray[selectedCardIndex].id == playingTwelveDeck[playingTwelveDeckIndex].id {
-                                                              playingTwelveDeck[playingTwelveDeckIndex].isMatched = false
-                                                          }
-                                                      }
-                                                  }
+                    clearAllSelected()
                     isFaceUpCardCount = 0
                     return
                     
                     
                 }
         }else {
-                clearAllSelectedCards(array: &selectedCardsArray)
-                                              for playingTwelveDeckIndex in self.playingTwelveDeck.indices {
-                                                  for selectedCardIndex in selectedCardsArray.indices {
-                                                      if selectedCardsArray[selectedCardIndex].id == playingTwelveDeck[playingTwelveDeckIndex].id {
-                                                          playingTwelveDeck[playingTwelveDeckIndex].isMatched = false
-                                                      }
-                                                  }
-                                              }
+                clearAllSelected()
                 isFaceUpCardCount = 0
                 return
                 
