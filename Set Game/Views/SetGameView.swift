@@ -12,23 +12,37 @@ struct SetGameView: View {
     
     @ObservedObject var setGameViewModel : SetGameViewModel
     
+   
     
+   
     
     var body: some View {
     
-           
+        
+        
+            
         Grid(self.setGameViewModel.playingTwelveSetCards) { setCard in
-               
-                SetCardView(setCard: setCard)
-                    .onTapGesture {
-                        
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                                self.setGameViewModel.choose(setCard: setCard)
-                        }
-                }
+                          
+          
+                    SetCardView(setCard: setCard)
                 
-                       
-        }
+                        
+                    .onTapGesture {
+                            self.setGameViewModel.choose(setCard: setCard)
+                    }
+                
+            
+                
+                
+        
+                
+           
+                           
+                            
+                            
+                    }
+                 
+                    
     }
         
        
@@ -41,3 +55,6 @@ struct SetGameView_Previews: PreviewProvider {
         SetGameView(setGameViewModel: SetGameViewModel())
     }
 }
+
+
+

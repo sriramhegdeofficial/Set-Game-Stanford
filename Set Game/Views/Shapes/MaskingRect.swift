@@ -26,8 +26,7 @@ struct MaskingRect: Shape {
             p.addLine(to: CGPoint(x: rect.width, y: 0 + offset))
             p.closeSubpath()
             
-            offset = offset + 20
-            
+            offset = offset + 8
         }
         
         

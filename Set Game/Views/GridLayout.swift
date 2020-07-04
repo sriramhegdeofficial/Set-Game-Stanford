@@ -17,6 +17,8 @@ struct GridLayout {
     
     private var itemCount = 12
     
+   
+    
     
     init(size: CGSize) {
         self.size = size
@@ -69,6 +71,7 @@ struct GridLayout {
             )
         }
     }
+    
    
 }
 

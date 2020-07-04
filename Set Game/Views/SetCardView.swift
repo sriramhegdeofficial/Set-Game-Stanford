@@ -20,7 +20,16 @@ struct SetCardView: View  {
     var count : Int
     var isSelected : Bool
     private var isMatched : Bool = false
-       
+    
+    @State var appear : Bool = false
+    
+    @State var disappear : Bool = false
+    
+    func generateRandomNumberForOffset(uValue: Int, lValue: Int) -> CGFloat {
+          
+        let result = Int(arc4random_uniform(UInt32(uValue - lValue + 1))) +   lValue
+        return CGFloat(result)
+      }
     
     
     init(setCard: SetGame.SetCard) {
@@ -34,37 +43,63 @@ struct SetCardView: View  {
         }
         self.isSelected = setCard.isSelected
         self.isMatched = setCard.isMatched
+        
     }
+    
+    
     
     var body: some View {
-        getContent(shapeName: shapeName, shading: shading, color: color, count: count)
-    }
-    
-    
-    
-    func getContent(shapeName: ShapeName, shading: Shadings, color: ColorValue, count: Int) -> some View {
-        
-        Group {
-            if !isMatched {
-                ZStack {
-                        RoundedRectangle(cornerRadius: cornerRadius)
-                            .stroke(isSelected ? Color.black : Color.gray, lineWidth: lineWidth)
-                        VStack {
-                                ForEach(0..<count) { _ in
-                                        self.getShapes(color: color)
+       
+            Group {
+                    if !isMatched {
+                        ZStack {
+                                RoundedRectangle(cornerRadius: cornerRadius)
+                                    .stroke(isSelected ? Color.black : Color.gray, lineWidth: lineWidth)
+                                VStack {
+                                        ForEach(0..<count) { _ in
+                                            self.getShapes(color: self.color)                                    }
+                                        }
+                                                                                                   
+                                }
+                                
+                                .padding(5)
+                                .scaleEffect(isSelected ? 1.07 : 1)
+                                .offset(x: self.appear ? 0 : generateRandomNumberForOffset(uValue: 300, lValue: -300),
+                                        y: self.appear ? 0 : generateRandomNumberForOffset(uValue: 300, lValue: -300))
+                                        .offset(x: self.disappear ?  generateRandomNumberForOffset(uValue: 300, lValue: -300) : 0,
+                                                y: self.disappear ? generateRandomNumberForOffset(uValue: 300, lValue: -300) : 0)
+                                .onAppear{
+                                    withAnimation(.easeOut(duration: 5)) {
+                                        self.appear = true
                                     }
                                 }
-                                                                                           
+                                
+                        .onDisappear{
+                            print("disappear running ")
+                            withAnimation(.easeOut(duration: 5)) {
+                                self.disappear = true
+                            }
                         }
-                        .padding(5)
-                        .scaleEffect(isSelected ? 1.07 : 1)
-                                                                                            
-                                                                                        
-                                                                                        
+                                                                                                
+                                                                                                
+                        }
+                                                    
                 }
-                                            
-        }
+         
+        
+        
+               
+                   
+         
+        
     }
+    
+    
+    
+    
+        
+    
+    
     
 
     func getShapes(color: ColorValue) -> some View {

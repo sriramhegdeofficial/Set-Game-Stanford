@@ -17,6 +17,8 @@ class SetGameViewModel: ObservableObject {
     static let shapes = [ShapeName.Capsule, ShapeName.Circle, ShapeName.Square]
     static let shadings = [Shadings.fill, Shadings.striped, Shadings.stroked]
     
+    static private var positionOfCard : Int = 0
+    
     var playingTwelveSetCards : Array<SetGame.SetCard> {
         setGameModel.playingTwelveDeck
     }
@@ -33,8 +35,11 @@ class SetGameViewModel: ObservableObject {
                 for shape in shapes {
                     for shading in shadings {
                         for count in 1...3 {
-                            let setCard = SetGame.SetCard(color: color, shapeName: shape, shading: shading, count: count)
+                            let setCard = SetGame.SetCard(color: color, shapeName: shape, shading: shading, count: count, position: positionOfCard)
                             deck.append(setCard)
+                            
+                            positionOfCard += 1
+                            
                         }
                         
                     }
@@ -63,6 +68,7 @@ class SetGameViewModel: ObservableObject {
     
    
     
+  
     
 }
 

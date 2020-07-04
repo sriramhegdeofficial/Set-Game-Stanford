@@ -13,20 +13,28 @@ struct SetGame {
     
     var deck : Array<SetCard> = []
     var playingTwelveDeck : Array<SetCard> = []
-    var addedTwelveCards = false
     
+    
+    var removedCardIndexArray : Int = 0
+    
+    
+    
+  
     
     
    private var isFaceUpCardCount = 0
     
     init(deck: Array<SetCard>){
+      
         self.deck = deck
-        if self.deck.count >= 12 && !addedTwelveCards{
-                 for _ in 1...12 {
-                    self.playingTwelveDeck.append(self.deck.remove(at: 0))
+       
+                 for index in 0..<12 {
+                    var setCard = self.deck.remove(at: 0)
+                    setCard.position = index
+                    self.playingTwelveDeck.append(setCard)
                  }
-             }
-             addedTwelveCards = true
+             
+             
              print("new deck count: \(deck.count)")
              
         
@@ -34,10 +42,15 @@ struct SetGame {
              
     }
     
-    mutating func addThreeCardsToPlayingDeck() {
-        for _ in 1...3 {
-            self.playingTwelveDeck.append(self.deck.remove(at: 0))
-        }
+  
+    
+    mutating func addACardToPlayingDeck() {
+       
+            var setCard = self.deck.remove(at: 0)
+            setCard.position = removedCardIndexArray
+            self.playingTwelveDeck.insert(setCard, at: setCard.position)
+            
+        
     }
     
     mutating func clearAllSelected() {
@@ -91,10 +104,17 @@ struct SetGame {
                                                                       if selectedCardsArray[selectedCardIndex].id == playingTwelveDeck[playingTwelveDeckIndex].id {
                                                                           print("card Value : \(playingTwelveDeck[playingTwelveDeckIndex])")
                                                                           playingTwelveDeck[playingTwelveDeckIndex].isMatched = true
-                                                                          addThreeCardsToPlayingDeck()
+                                                                        
+                                                                        
+                                                        removedCardIndexArray = playingTwelveDeck[playingTwelveDeckIndex].position
+                                                                        
+                                                                            playingTwelveDeck.remove(at: playingTwelveDeckIndex)
+                                                                            addACardToPlayingDeck()
+                                                                            print("added new card to playingDeck")
                                                                       }
                                                                   }
                                                               }
+                                
                                 isFaceUpCardCount = 0
                                 
                                 
@@ -144,7 +164,7 @@ struct SetGame {
         var count : Int
         var isSelected = false
         var isMatched = false
-        
+        var position : Int
         var id = UUID()
         
         

@@ -13,9 +13,14 @@ struct Grid<Item, ItemView> : View where Item : Identifiable, ItemView : View{
     private var viewForItem : (Item) -> ItemView
     
     
+    
+  
+    
+    
     init(_ items: Array<Item>, viewForItem: @escaping (Item) -> ItemView) {
         self.items = items
         self.viewForItem = viewForItem
+        
     }
     
     func getLayout(size: CGSize) -> GridLayout {
@@ -27,12 +32,17 @@ struct Grid<Item, ItemView> : View where Item : Identifiable, ItemView : View{
     var body: some View {
         GeometryReader { geometry in
             
-            ForEach(self.items) { item in
-               self.viewForItem(item)
-                .frame(width: self.getLayout(size: geometry.size).itemSize.width,
-                       height: self.getLayout(size: geometry.size).itemSize.height)
-                        .position(self.getLayout(size: geometry.size)
-                        .location(ofItemAt: self.items.firstIndex(of: item)!))
+                
+                    ForEach(self.items) { item in
+                       self.viewForItem(item)
+                        .frame(width: self.getLayout(size: geometry.size).itemSize.width,
+                               height: self.getLayout(size: geometry.size).itemSize.height)
+                                .position(self.getLayout(size: geometry.size)
+                                    .location(ofItemAt: self.items.firstIndex(of: item)!))
+                       
+                        
+                    
+                
             }
         }
         
